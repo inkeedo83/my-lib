@@ -1,0 +1,30 @@
+{
+  "name": "my-lib",
+  "description": "lib",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@nestjs/axios": "3.1.0",
+    "@nestjs/common": "^10.4.8",
+    "@nestjs/config": "^4.0.1",
+    "axios": "1.7.7",
+    "nestjs-pino": "^4.3.1",
+    "pino": "^9.6.0",
+    "reflect-metadata": "0.2.0",
+    "rxjs": "7.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "20.12.7",
+    "source-map-support": "0.5.21",
+    "ts-loader": "9.5.1",
+    "ts-node": "10.9.2",
+    "tsconfig-paths": "4.2.0",
+    "typescript": "5.4.5"
+  }
+}
