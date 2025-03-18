@@ -3,5 +3,5 @@ import { LoggerConfigs } from "../types/types";
 
 export const { ConfigurableModuleClass, MODULE_OPTIONS_TOKEN, OPTIONS_TYPE } =
   new ConfigurableModuleBuilder<LoggerConfigs>()
-    .setClassMethodName("forRoot")
+    .setClassMethodName("forRootAsync")
     .build();

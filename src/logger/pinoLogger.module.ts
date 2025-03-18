@@ -36,4 +36,4 @@ import { LoggerConfigs } from "../types/types";
     }),
   ],
 })
-export class pinoLoggerModule extends ConfigurableModuleClass {}
+export class PinoLogModule extends ConfigurableModuleClass {}
