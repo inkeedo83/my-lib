@@ -1,2 +1,2 @@
-export * from "./logger/pinoLogger.module";
-export * from "./types/types";
+export { PinoLogModule } from "./logger/pinoLogger.module";
+export { LoggerConfigs } from "./types/types";
