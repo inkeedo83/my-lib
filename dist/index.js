@@ -15,4 +15,5 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./logger/pinoLogger.module"), exports);
+__exportStar(require("./types/types"), exports);
 //# sourceMappingURL=index.js.map

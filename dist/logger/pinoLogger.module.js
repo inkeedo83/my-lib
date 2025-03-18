@@ -6,15 +6,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pinoLoggerModule = void 0;
+exports.PinoLogModule = void 0;
 const common_1 = require("@nestjs/common");
 const nestjs_pino_1 = require("nestjs-pino");
 const pino_1 = require("pino");
 const module_definition_1 = require("./module-definition");
-let pinoLoggerModule = class pinoLoggerModule extends module_definition_1.ConfigurableModuleClass {
+let PinoLogModule = class PinoLogModule extends module_definition_1.ConfigurableModuleClass {
 };
-exports.pinoLoggerModule = pinoLoggerModule;
-exports.pinoLoggerModule = pinoLoggerModule = __decorate([
+exports.PinoLogModule = PinoLogModule;
+exports.PinoLogModule = PinoLogModule = __decorate([
     (0, common_1.Global)(),
     (0, common_1.Module)({
         imports: [
@@ -42,5 +42,5 @@ exports.pinoLoggerModule = pinoLoggerModule = __decorate([
             }),
         ],
     })
-], pinoLoggerModule);
+], PinoLogModule);
 //# sourceMappingURL=pinoLogger.module.js.map
