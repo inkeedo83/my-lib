@@ -1,3 +1,4 @@
 export { PinoLogModule } from "./logger/pinoLogger.module";
-export { LoggerConfigs } from "./types/types";
+export { PrismaModule } from "./prisma/prisma.module";
+export { PrismaService } from "./prisma/prisma.service";
 //# sourceMappingURL=index.d.ts.map
