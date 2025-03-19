@@ -20,7 +20,19 @@
     "nestjs-pino": "^4.3.1",
     "pino": "^9.6.0",
     "reflect-metadata": "0.2.2",
-    "rxjs": "7.8.2"
+    "rxjs": "7.8.2",
+    "@opentelemetry/exporter-logs-otlp-http": "^0.57.2",
+    "@opentelemetry/exporter-metrics-otlp-http": "^0.57.2",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.57.2",
+    "@opentelemetry/instrumentation-express": "^0.47.1",
+    "@opentelemetry/instrumentation-http": "^0.57.2",
+    "@opentelemetry/instrumentation-nestjs-core": "^0.44.1",
+    "@opentelemetry/resources": "^1.30.1",
+    "@opentelemetry/sdk-logs": "^0.57.2",
+    "@opentelemetry/sdk-metrics": "^1.30.1",
+    "@opentelemetry/sdk-node": "^0.57.2",
+    "@opentelemetry/sdk-trace-base": "^1.30.1",
+    "@opentelemetry/semantic-conventions": "^1.30.0"
   },
   "devDependencies": {
     "@types/node": "22.13.10",
