@@ -3,16 +3,16 @@ import { LoggerModule } from "nestjs-pino";
 import { stdTimeFunctions } from "pino";
 
 import {
-  ConfigurableModuleClass,
-  MODULE_OPTIONS_TOKEN,
-} from "./module-definition";
+  LoggerModuleClass,
+  LOGGER_OPTIONS_TOKEN,
+} from "./pinoLogger.module-definition";
 import { LoggerConfigs } from "../types/types";
 
 @Global()
 @Module({
   imports: [
     LoggerModule.forRootAsync({
-      inject: [MODULE_OPTIONS_TOKEN],
+      inject: [LOGGER_OPTIONS_TOKEN],
       useFactory: ({ isProduction, enabled }: LoggerConfigs) => {
         return {
           pinoHttp: {
@@ -36,4 +36,4 @@ import { LoggerConfigs } from "../types/types";
     }),
   ],
 })
-export class PinoLogModule extends ConfigurableModuleClass {}
+export class PinoLogModule extends LoggerModuleClass {}

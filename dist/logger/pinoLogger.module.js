@@ -10,8 +10,8 @@ exports.PinoLogModule = void 0;
 const common_1 = require("@nestjs/common");
 const nestjs_pino_1 = require("nestjs-pino");
 const pino_1 = require("pino");
-const module_definition_1 = require("./module-definition");
-let PinoLogModule = class PinoLogModule extends module_definition_1.ConfigurableModuleClass {
+const pinoLogger_module_definition_1 = require("./pinoLogger.module-definition");
+let PinoLogModule = class PinoLogModule extends pinoLogger_module_definition_1.LoggerModuleClass {
 };
 exports.PinoLogModule = PinoLogModule;
 exports.PinoLogModule = PinoLogModule = __decorate([
@@ -19,7 +19,7 @@ exports.PinoLogModule = PinoLogModule = __decorate([
     (0, common_1.Module)({
         imports: [
             nestjs_pino_1.LoggerModule.forRootAsync({
-                inject: [module_definition_1.MODULE_OPTIONS_TOKEN],
+                inject: [pinoLogger_module_definition_1.LOGGER_OPTIONS_TOKEN],
                 useFactory: ({ isProduction, enabled }) => {
                     return {
                         pinoHttp: {
