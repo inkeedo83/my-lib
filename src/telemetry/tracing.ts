@@ -1,24 +1,13 @@
 import { Logger } from "@nestjs/common";
-import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-http";
-import { OTLPMetricExporter } from "@opentelemetry/exporter-metrics-otlp-http";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
 import { ExpressInstrumentation } from "@opentelemetry/instrumentation-express";
 import { HttpInstrumentation } from "@opentelemetry/instrumentation-http";
 import { NestInstrumentation } from "@opentelemetry/instrumentation-nestjs-core";
 import { Resource } from "@opentelemetry/resources";
-
-import {
-  BatchLogRecordProcessor,
-  LoggerProvider,
-} from "@opentelemetry/sdk-logs";
-import {
-  MeterProvider,
-  PeriodicExportingMetricReader,
-} from "@opentelemetry/sdk-metrics";
 import { NodeSDK } from "@opentelemetry/sdk-node";
 import { BatchSpanProcessor } from "@opentelemetry/sdk-trace-base";
 import { PrismaInstrumentation } from "@prisma/instrumentation";
-import { TelemetryConfigs, TelemetryBootstrapConfigs } from "../types/types";
+import { TelemetryBootstrapConfigs, TelemetryConfigs } from "../types/types";
 
 // Константы для семантических атрибутов ресурсов
 const OTEL_SERVICE_NAME = "service.name";
@@ -28,8 +17,6 @@ export class Telemetry {
   private static instance: Telemetry | null = null;
   private otelSDK: NodeSDK | null = null;
   private isInitializing = false;
-  private meterProvider: MeterProvider | null = null;
-  private loggerProvider: LoggerProvider | null = null;
   private config: TelemetryConfigs;
   private logger = new Logger(Telemetry.name);
 
@@ -49,6 +36,7 @@ export class Telemetry {
       this.logger.log(
         "Телеметрия уже инициализирована или в процессе инициализации"
       );
+
       return;
     }
 
@@ -60,24 +48,9 @@ export class Telemetry {
         [DEPLOYMENT_ENVIRONMENT]: this.config.OTEL_SERVICE_NAME,
       });
 
-      const { traceExporter, metricExporter, logExporter } =
-        this.createExporters();
+      const { traceExporter } = this.createExporters();
 
       const traceProcessor = new BatchSpanProcessor(traceExporter);
-      const logProcessor = new BatchLogRecordProcessor(logExporter);
-
-      this.loggerProvider = new LoggerProvider({ resource });
-      this.loggerProvider.addLogRecordProcessor(logProcessor);
-
-      const metricReader = new PeriodicExportingMetricReader({
-        exporter: metricExporter,
-        exportIntervalMillis: 60000,
-      });
-
-      this.meterProvider = new MeterProvider({
-        resource,
-        readers: [metricReader],
-      });
 
       const instrumentations = this.createInstrumentations();
 
@@ -99,27 +72,6 @@ export class Telemetry {
   }
 
   private setupShutdownHandlers(): void {
-    process.on("beforeExit", () => {
-      if (this.meterProvider)
-        this.meterProvider
-          .shutdown()
-          .then(() => this.logger.log("MeterProvider успешно завершил работу"))
-          .catch((err) =>
-            this.logger.error("Ошибка при завершении работы MeterProvider", err)
-          );
-
-      if (this.loggerProvider)
-        this.loggerProvider
-          .shutdown()
-          .then(() => this.logger.log("LoggerProvider успешно завершил работу"))
-          .catch((err) =>
-            this.logger.error(
-              "Ошибка при завершении работы LoggerProvider",
-              err
-            )
-          );
-    });
-
     const shutdownHandler = (): void => {
       if (this.otelSDK)
         this.otelSDK
@@ -141,18 +93,10 @@ export class Telemetry {
 
   private createExporters(): {
     traceExporter: OTLPTraceExporter;
-    metricExporter: OTLPMetricExporter;
-    logExporter: OTLPLogExporter;
   } {
     return {
       traceExporter: new OTLPTraceExporter({
         url: this.config.OTEL_JAEGER_ENDPOINT,
-      }),
-      metricExporter: new OTLPMetricExporter({
-        url: this.config.OTEL_METRICS_ENDPOINT,
-      }),
-      logExporter: new OTLPLogExporter({
-        url: this.config.OTEL_LOGS_ENDPOINT,
       }),
     };
   }
