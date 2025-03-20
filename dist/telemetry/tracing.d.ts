@@ -1,10 +1,8 @@
-import { TelemetryConfigs, TelemetryBootstrapConfigs } from "../types/types";
+import { TelemetryBootstrapConfigs, TelemetryConfigs } from "../types/types";
 export declare class Telemetry {
     private static instance;
     private otelSDK;
     private isInitializing;
-    private meterProvider;
-    private loggerProvider;
     private config;
     private logger;
     constructor(config: TelemetryConfigs);
